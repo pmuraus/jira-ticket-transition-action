@@ -1,0 +1,19 @@
+
+    {
+      "author": {
+        "email": "peter.muraus@inova.si",
+        "name": "Peter Muraus",
+        "username": "pmuraus"
+      },
+      "committer": {
+        "email": "peter.muraus@inova.si",
+        "name": "Peter Muraus",
+        "username": "pmuraus"
+      },
+      "distinct": true,
+      "id": "5ae95c3178568b79434004a6072ce5d766429045",
+      "message": "[ab-112] logs",
+      "timestamp": "2022-06-17T08:49:53+02:00",
+      "tree_id": "2eab9ba2a008b89bb15735c7d6d648ce45a7314d",
+      "url": "https://github.com/pmuraus/jira-ticket-extractor-action/commit/5ae95c3178568b79434004a6072ce5d766429045"
+    }

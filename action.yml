@@ -1,0 +1,22 @@
+name: 'Jira ticket extractor'
+description: 'Extract jira ticket from any string'
+inputs:
+  targetTransition:  # id of input
+    description: 'Target transition'
+    required: true
+  message:  # id of input
+    description: 'Message to be posted as comment in the transitioned issue'
+    required: false
+  jiraBaseUrl:  # id of input
+    description: 'Jira base url (something.atlassian.net)'
+    required: true
+  jiraEmail:  # id of input
+    description: 'Jira user email'
+    required: true
+  jiraToken:  # id of input
+    description: 'Jira user token'
+    required: true
+  
+runs:
+  using: 'node16'
+  main: 'index.js'

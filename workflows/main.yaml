@@ -1,0 +1,18 @@
+on: push
+jobs:
+  extract_jira_tickets:
+    name: Extract
+    runs-on: ubuntu-latest
+    env:
+      OWNER_NAME: ${{github.event.head_commit.author.name}}
+    steps:
+      - uses: actions/checkout@v2
+      - name: install
+        run: npm install
+      - uses: pmuraus/jira-ticket-extractor-action@main
+        with:
+          targetTransition: "In Progress"
+          message: "$OWNER_NAME started working on this issue"
+          jiraBaseUrl: "peromed.atlassian.net"
+          jiraEmail: "peromed@gmail.com"
+          jiraToken: ${{secret.JIRA_TOKEN}}

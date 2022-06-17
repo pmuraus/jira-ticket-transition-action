@@ -1,0 +1,56 @@
+[
+    {
+      "author": {
+        "email": "peter.muraus@inova.si",
+        "name": "Peter Muraus",
+        "username": "pmuraus"
+      },
+      "committer": {
+        "email": "peter.muraus@inova.si",
+        "name": "Peter Muraus",
+        "username": "pmuraus"
+      },
+      "distinct": true,
+      "id": "5ae95c3178568b79434004a6072ce5d766429045",
+      "message": "[ab-112] logs",
+      "timestamp": "2022-06-17T08:49:53+02:00",
+      "tree_id": "2eab9ba2a008b89bb15735c7d6d648ce45a7314d",
+      "url": "https://github.com/pmuraus/jira-ticket-extractor-action/commit/5ae95c3178568b79434004a6072ce5d766429045"
+    },
+    {
+      "author": {
+        "email": "peter.muraus@inova.si",
+        "name": "Peter Muraus",
+        "username": "pmuraus"
+      },
+      "committer": {
+        "email": "peter.muraus@inova.si",
+        "name": "Peter Muraus",
+        "username": "pmuraus"
+      },
+      "distinct": true,
+      "id": "c2fb48dd12057cfcccc806f8be9f14460b960e32",
+      "message": "[ab-112] logs2",
+      "timestamp": "2022-06-17T08:50:15+02:00",
+      "tree_id": "a85e8de32dcfacf6caef8fa12725220ff6a45ade",
+      "url": "https://github.com/pmuraus/jira-ticket-extractor-action/commit/c2fb48dd12057cfcccc806f8be9f14460b960e32"
+    },
+    {
+      "author": {
+        "email": "peter.muraus@inova.si",
+        "name": "Peter Muraus",
+        "username": "pmuraus"
+      },
+      "committer": {
+        "email": "peter.muraus@inova.si",
+        "name": "Peter Muraus",
+        "username": "pmuraus"
+      },
+      "distinct": true,
+      "id": "63c1b39d8e874530febd87072fa62ee9bc35231e",
+      "message": "[ab-112] logs3",
+      "timestamp": "2022-06-17T08:50:45+02:00",
+      "tree_id": "75cc1e782f2339538fb9fc6a7a2ac75fefd94cb1",
+      "url": "https://github.com/pmuraus/jira-ticket-extractor-action/commit/63c1b39d8e874530febd87072fa62ee9bc35231e"
+    }
+  ]
