@@ -4,7 +4,7 @@ const github = require('@actions/github');
 
 let tickets = action.getTickets(github.context.payload.commits)
 const targetTransition = core.getInput("targetTransition")
-await action.transitionTickets(
+action.transitionTickets(
     tickets,
     targetTransition,
     core.getInput("message"),
