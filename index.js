@@ -11,5 +11,6 @@ action.transitionTickets(
     core.getInput("jiraBaseUrl"),
     core.getInput("jiraEmail"),
     core.getInput("jiraToken")
-)
-console.log(`Tickets ${transitioned.join(", ")} transitioned to ${targetTransition}`)
+).then(transitioned => {
+    console.log(`Tickets ${transitioned.join(", ")} transitioned to ${targetTransition}`)
+})
