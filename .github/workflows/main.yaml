@@ -15,4 +15,4 @@ jobs:
           message: "$OWNER_NAME started working on this issue"
           jiraBaseUrl: "peromed.atlassian.net"
           jiraEmail: "peromed@gmail.com"
-          jiraToken: ${{secret.JIRA_TOKEN}}
+          jiraToken: ${{secrets.JIRA_TOKEN}}
