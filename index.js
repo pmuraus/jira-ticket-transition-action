@@ -9,8 +9,8 @@ const targetTransition = core.getInput("targetTransition")
 const sourceTransition = core.getInput("sourceTransition")
 action.transitionTickets(
     tickets,
-    targetTransition,
     sourceTransition,
+    targetTransition,
     core.getInput("message"),
     core.getInput("jiraBaseUrl"),
     core.getInput("jiraEmail"),
