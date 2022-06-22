@@ -25,7 +25,7 @@ function getTickets(input, ref) {
     return Object.keys(resMap)
 }
 
-async function transitionTickets(tickets, targetTransition, message, baseUrl, email, token) {
+async function transitionTickets(tickets, sourceTransition, targetTransition, message, baseUrl, email, token) {
     var JiraApi = require('jira-client');
     var jira = new JiraApi({
         protocol: 'https',
@@ -37,17 +37,21 @@ async function transitionTickets(tickets, targetTransition, message, baseUrl, em
     });
 
     let transitioned = []
-    for (ticket of tickets) {
+    for (let ticket of tickets) {
         try {
             let issue = await jira.findIssue(ticket)
-            let transitionId = await jira.listTransitions(ticket).then(res => {
-                return res.transitions.find((it) => it.name.toLowerCase() === targetTransition.toLowerCase()).id
-            })
-            if (issue.fields.status.name.toLowerCase() !== targetTransition.toLowerCase()) {
-                await jira.transitionIssue(ticket, { transition: transitionId })
-                transitioned.push(ticket)
-                if (message != null) {
-                    await jira.addComment(ticket, message)
+            if (sourceTransition != null && sourceTransition.toLowerCase() !== issue.fields.status.name.toLowerCase()) {
+                console.log(`${ticket} is not in ${sourceTransition} status (${issue.fields.status.name}), skipping`)
+            } else {
+                let transitionId = await jira.listTransitions(ticket).then(res => {
+                    return res.transitions.find((it) => it.name.toLowerCase() === targetTransition.toLowerCase()).id
+                })
+                if (issue.fields.status.name.toLowerCase() !== targetTransition.toLowerCase()) {
+                    await jira.transitionIssue(ticket, { transition: transitionId })
+                    transitioned.push(ticket)
+                    if (message != null) {
+                        await jira.addComment(ticket, message)
+                    }
                 }
             }
         } catch (error) {

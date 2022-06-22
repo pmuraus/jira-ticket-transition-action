@@ -6,9 +6,11 @@ let tickets = action.getTickets(github.context.payload.commits, github.context.p
 console.log(`Payload ${github.context.payload.commits}`)
 console.log(`Found tickets ${JSON.stringify(tickets, null, 2)}`)
 const targetTransition = core.getInput("targetTransition")
+const sourceTransition = core.getInput("sourceTransition")
 action.transitionTickets(
     tickets,
     targetTransition,
+    sourceTransition,
     core.getInput("message"),
     core.getInput("jiraBaseUrl"),
     core.getInput("jiraEmail"),

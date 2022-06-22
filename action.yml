@@ -4,6 +4,9 @@ inputs:
   targetTransition:  # id of input
     description: 'Target transition'
     required: true
+  sourceTransition:  # id of input
+    description: 'Ticket needs to be in this status in order to be transitioned (not recomended)'
+    required: false
   message:  # id of input
     description: 'Message to be posted as comment in the transitioned issue'
     required: false
