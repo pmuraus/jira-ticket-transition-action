@@ -41,7 +41,7 @@ async function transitionTickets(tickets, targetTransition, message, baseUrl, em
         try {
             let issue = await jira.findIssue(ticket)
             let transitionId = await jira.listTransitions(ticket).then(res => {
-                return res.transitions.find((it) => it.name === targetTransition).id
+                return res.transitions.find((it) => it.name.toLowerCase() === targetTransition.toLowerCase()).id
             })
             if (issue.fields.status.name.toLowerCase() !== targetTransition.toLowerCase()) {
                 await jira.transitionIssue(ticket, { transition: transitionId })
