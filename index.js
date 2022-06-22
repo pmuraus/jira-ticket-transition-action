@@ -3,6 +3,8 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 let tickets = action.getTickets(github.context.payload.commits, github.context.payload.ref)
+console.log(`Payload ${github.context.payload.commits}`)
+console.log(`Found tickets ${JSON.stringify(tickets, null, 2)}`)
 const targetTransition = core.getInput("targetTransition")
 action.transitionTickets(
     tickets,
