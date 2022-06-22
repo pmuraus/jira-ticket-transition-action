@@ -40,7 +40,7 @@ async function transitionTickets(tickets, sourceTransition, targetTransition, me
     for (let ticket of tickets) {
         try {
             let issue = await jira.findIssue(ticket)
-            if (sourceTransition != null && sourceTransition.toLowerCase() !== issue.fields.status.name.toLowerCase()) {
+            if (sourceTransition && sourceTransition.toLowerCase() !== issue.fields.status.name.toLowerCase()) {
                 console.log(`${ticket} is not in ${sourceTransition} status (${issue.fields.status.name}), skipping`)
             } else {
                 let transitionId = await jira.listTransitions(ticket).then(res => {
