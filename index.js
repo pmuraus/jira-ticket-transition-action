@@ -9,8 +9,8 @@ if (github.context.payload.commits) {
     commits = github.context.payload.commits
 }
 let pullRequestRef = ""
-if (github.context.pull_request && github.context.pull_request.head && github.context.pull_request.head.ref) {
-    pullRequestRef = github.context.pull_request.head.ref
+if (github.context.payload.pull_request && github.context.payload.pull_request.head && github.context.payload.pull_request.head.ref) {
+    pullRequestRef = github.context.payload.pull_request.head.ref
 }
 let tickets = action.getTickets([...commits, pullRequestRef], github.context.payload.ref)
 console.log(`Payload ${github.context.payload.commits}`)
