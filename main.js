@@ -4,7 +4,7 @@ function getTickets(input) {
     if (input != null) {
         if (input instanceof Array) {
             source = input.map((it) => {
-                return it ? it.message : ""
+                return it ? (it.message ? it.message : it) : ""
             })
             source = source.join(" ")
         } else {
