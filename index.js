@@ -2,8 +2,6 @@ const action = require("./main")
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-
-console.log(github.context)
 let commits = []
 if (github.context.payload.commits) {
     commits = github.context.payload.commits
@@ -14,9 +12,6 @@ if (github.context.payload.pull_request && github.context.payload.pull_request.h
 }
 let ticketList = [...commits, pullRequestRef, github.context.payload.ref]
 let tickets = action.getTickets(ticketList)
-console.log(`Payload ${JSON.stringify(github.context.payload.pull_request.head)}`)
-console.log(`To parse ${JSON.stringify(ticketList, null, 2)}`)
-console.log(`Found tickets ${JSON.stringify(tickets, null, 2)}`)
 const targetTransition = core.getInput("targetTransition")
 const sourceTransition = core.getInput("sourceTransition")
 action.transitionTickets(
