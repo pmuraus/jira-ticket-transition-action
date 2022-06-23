@@ -8,7 +8,11 @@ let commits = []
 if (github.context.payload.commits) {
     commits = github.context.payload.commits
 }
-let tickets = action.getTickets([...commits, github.context.headRef], github.context.payload.ref)
+let pullRequestRef = ""
+if (github.context.pull_request && github.context.pull_request.head && github.context.pull_request.head.ref) {
+    pullRequestRef = github.context.pull_request.head.ref
+}
+let tickets = action.getTickets([...commits, pullRequestRef], github.context.payload.ref)
 console.log(`Payload ${github.context.payload.commits}`)
 console.log(`Found tickets ${JSON.stringify(tickets, null, 2)}`)
 const targetTransition = core.getInput("targetTransition")

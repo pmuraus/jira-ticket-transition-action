@@ -49,7 +49,7 @@ async function transitionTickets(tickets, sourceTransition, targetTransition, me
                 if (issue.fields.status.name.toLowerCase() !== targetTransition.toLowerCase()) {
                     await jira.transitionIssue(ticket, { transition: transitionId })
                     transitioned.push(ticket)
-                    if (message != null) {
+                    if (message) {
                         await jira.addComment(ticket, message)
                     }
                 }
