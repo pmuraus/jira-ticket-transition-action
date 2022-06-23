@@ -1,4 +1,4 @@
-function getTickets(input, ref) {
+function getTickets(input) {
     const ticketRegex = /([a-zA-Z][a-zA-Z0-9_]+-[1-9][0-9]*)/g
     let source = ""
     if (input != null) {
@@ -10,8 +10,6 @@ function getTickets(input, ref) {
         } else {
             source = input.message
         }
-    } else {
-        source = ref
     }
     let resMap = {}
     if (source != null) {
