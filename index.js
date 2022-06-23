@@ -13,7 +13,7 @@ if (github.context.payload.pull_request && github.context.payload.pull_request.h
     pullRequestRef = github.context.payload.pull_request.head.ref
 }
 let ticketList = [...commits, pullRequestRef, github.context.payload.ref]
-let tickets = action.getTickets([...commits, pullRticketList)
+let tickets = action.getTickets(ticketList)
 console.log(`Payload ${JSON.stringify(github.context.payload.pull_request.head)}`)
 console.log(`To parse ${JSON.stringify(ticketList, null, 2)}`)
 console.log(`Found tickets ${JSON.stringify(tickets, null, 2)}`)
