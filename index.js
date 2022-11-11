@@ -11,17 +11,4 @@ if (github.context.payload.pull_request && github.context.payload.pull_request.h
     pullRequestRef = github.context.payload.pull_request.head.ref
 }
 let ticketList = [...commits, pullRequestRef, github.context.payload.ref]
-let tickets = action.getTickets(ticketList)
-const targetTransition = core.getInput("targetTransition")
-const sourceTransition = core.getInput("sourceTransition")
-action.transitionTickets(
-    tickets,
-    sourceTransition,
-    targetTransition,
-    core.getInput("message"),
-    core.getInput("jiraBaseUrl"),
-    core.getInput("jiraEmail"),
-    core.getInput("jiraToken")
-).then(transitioned => {
-    console.log(`Tickets ${transitioned.join(", ")} transitioned to ${targetTransition}`)
-})
+console.log(JSON.stringify(ticketList))
