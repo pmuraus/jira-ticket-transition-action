@@ -26,6 +26,10 @@ function getTickets(input) {
 }
 
 async function extractCommits(after, before) {
+  if (!after || !before) {
+    return []
+  }
+  
   let options = {
     from: before,
     to: after
