@@ -29,16 +29,16 @@ async function extractCommits(after, before) {
   if (!after || !before) {
     return []
   }
-  
+
   let options = {
     from: before,
     to: after
   }
   if (options.from === "0000000000000000000000000000000000000000") {
-    delete options.from
+    return []
   }
   if (options.to === "0000000000000000000000000000000000000000") {
-    delete options.to
+    return []
   }
 
   let res = await simpleGit().log(options)
