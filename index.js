@@ -15,7 +15,7 @@ async function run() {
   let tickets = action.getTickets(ticketList)
   const targetTransition = core.getInput("targetTransition")
   const sourceTransition = core.getInput("sourceTransition")
-  console.log("tickets: ", ticketList.map(it=> it.message), "before: ", before, "after: ", after)
+  console.log("tickets: ", ticketList.map(it=> it && it.message), "before: ", before, "after: ", after)
 
   // action.transitionTickets(
   //   tickets,
