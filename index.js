@@ -7,7 +7,7 @@ async function run() {
   if (github.context.payload.pull_request && github.context.payload.pull_request.head && github.context.payload.pull_request.head.ref) {
     pullRequestRef = github.context.payload.pull_request.head.ref
   }
-  let before = github.context.payload.before
+  let before = core.getInput(getOutputString(github.context.payload.ref))
   let after = github.context.payload.after
   console.log("payload: ", github.context.payload)
   let commitTickets = await action.extractCommits(after, before)
@@ -29,5 +29,12 @@ async function run() {
   // ).then(transitioned => {
   //   console.log(`Tickets ${transitioned.join(", ")} transitioned to ${targetTransition}`)
   // })
+  core.setOutput(getOutputString(github.context.payload.ref), after)
 }
+
+function getOutputString(ref) {
+  ref = ref.replace(/\//g, '_');
+  return `buildRef_${ref}`
+}
+
 run()
