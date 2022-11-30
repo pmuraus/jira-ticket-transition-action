@@ -9,7 +9,8 @@ async function run() {
   }
   let before = core.getInput(getOutputString(github.context.payload.ref))
   let after = github.context.payload.after
-  console.log("payload: ", github.context.payload)
+  console.log("before: ", before, getOutputString(github.context.payload.ref))
+  // console.log("payload: ", github.context.payload)
   let commitTickets = await action.extractCommits(after, before)
   let ticketList = [...commitTickets, pullRequestRef, github.context.payload.ref]
   let tickets = action.getTickets(ticketList)
