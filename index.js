@@ -47,9 +47,4 @@ async function run() {
   })
 }
 
-function getOutputString(ref) {
-  ref = ref.replace(/\//g, '_');
-  return `buildRef_${ref}`
-}
-
 run()
