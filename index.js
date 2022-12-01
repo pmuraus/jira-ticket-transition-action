@@ -16,9 +16,13 @@ async function run() {
   const repository = process.env.GITHUB_REPOSITORY;
   const [owner, repo] = repository.split("/");
 
-  const response = await octokit.rest.actions.listWorkflowRuns({ owner, repo, workflow_id: jobId, per_page: 100 });
-  response.data.workflow_runs.map(it=> console.log(it))
-
+  const response = await octokit.rest.actions.listWorkflowRuns({owner, repo, workflow_id: jobId, per_page: 100});
+  let workflow = response.data.workflow_runs
+    .filter(it => it.conclusion === "success")
+    .sort((r1, r2) => new Date(r2.created_at).getTime() - new Date(r1.created_at).getTime())
+    .find(it => it !== undefined)
+  
+  console.log(workflow)
   const output = process.env["GITHUB_OUTPUT"]
   console.log("output: ", output)
   // console.log("payload: ", github.context.payload)
@@ -27,7 +31,7 @@ async function run() {
   let tickets = action.getTickets(ticketList)
   const targetTransition = core.getInput("targetTransition")
   const sourceTransition = core.getInput("sourceTransition")
-  console.log("commitTickets ", commitTickets.map(it=> it && it.message))
+  console.log("commitTickets ", commitTickets.map(it => it && it.message))
   console.log("tickets: ", tickets, "before: ", before, "after: ", after)
 
   // action.transitionTickets(
