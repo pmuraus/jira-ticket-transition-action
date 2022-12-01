@@ -9,7 +9,7 @@ async function run() {
   }
   const branch = github.context.payload.ref.split('/').pop()
   let after = github.context.payload.after
-  const jobId = "prVerify.yaml"
+  const jobId = "Verifiy branch"
   const token = core.getInput("githubToken")
   console.log("job id", jobId)
   const octokit = github.getOctokit(token);
