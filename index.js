@@ -11,7 +11,9 @@ async function run() {
   let after = github.context.payload.after
   const jobId = process.env["GITHUB_JOB"]
   console.log("job id", jobId)
-  const octokit = github.getOctokit(process.env["GITHUB_TOKEN"]);
+  console.log("log1", github.context.token)
+  console.log("log2", github.context.payload.token)
+  const octokit = github.getOctokit(github.context.token);
   const repository = process.env.GITHUB_REPOSITORY;
   const [owner, repo] = repository.split("/");
 
