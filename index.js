@@ -7,6 +7,7 @@ async function run() {
   if (github.context.payload.pull_request && github.context.payload.pull_request.head && github.context.payload.pull_request.head.ref) {
     pullRequestRef = github.context.payload.pull_request.head.ref
   }
+  const branch = github.context.payload.split('/').pop()
   let after = github.context.payload.after
   const jobId = "prVerify.yaml"
   const token = core.getInput("githubToken")
@@ -17,7 +18,7 @@ async function run() {
 
   const response = await octokit.rest.actions.listWorkflowRuns({owner, repo, workflow_id: jobId, per_page: 100});
   let workflow = response.data.workflow_runs
-    .filter(it => it.conclusion === "success")
+    .filter(it => it.conclusion === "success" && branch === it.head_branch)
     .sort((r1, r2) => new Date(r2.created_at).getTime() - new Date(r1.created_at).getTime())
     .find(it => it !== undefined)
   
