@@ -11,7 +11,6 @@ async function run() {
   let after = github.context.payload.after
   const workflowName = process.env["GITHUB_WORKFLOW"]
   const token = core.getInput("githubToken")
-  console.log("job id", workflowName)
   const octokit = github.getOctokit(token);
   const repository = process.env.GITHUB_REPOSITORY;
   const [owner, repo] = repository.split("/");
@@ -24,12 +23,9 @@ async function run() {
     .sort((r1, r2) => new Date(r2.created_at).getTime() - new Date(r1.created_at).getTime())
     .find(it => it !== undefined)
   
-  console.log(workflow)
-  let before = workflow.head_sha
+  let before = workflow && workflow.head_sha
   
   const output = process.env["GITHUB_OUTPUT"]
-  console.log("output: ", output)
-  // console.log("payload: ", github.context.payload)
   let commitTickets = await action.extractCommits(after, before)
   let ticketList = [...commitTickets, pullRequestRef, github.context.payload.ref]
   let tickets = action.getTickets(ticketList)
@@ -38,19 +34,17 @@ async function run() {
   console.log("commitTickets ", commitTickets.map(it => it && it.message))
   console.log("tickets: ", tickets, "before: ", before, "after: ", after)
 
-  // action.transitionTickets(
-  //   tickets,
-  //   sourceTransition,
-  //   targetTransition,
-  //   core.getInput("message"),
-  //   core.getInput("jiraBaseUrl"),
-  //   core.getInput("jiraEmail"),
-  //   core.getInput("jiraToken")
-  // ).then(transitioned => {
-  //   console.log(`Tickets ${transitioned.join(", ")} transitioned to ${targetTransition}`)
-  // })
-  output
-  core.setOutput(getOutputString(github.context.payload.ref), after)
+  action.transitionTickets(
+    tickets,
+    sourceTransition,
+    targetTransition,
+    core.getInput("message"),
+    core.getInput("jiraBaseUrl"),
+    core.getInput("jiraEmail"),
+    core.getInput("jiraToken")
+  ).then(transitioned => {
+    console.log(`Tickets ${transitioned.join(", ")} transitioned to ${targetTransition}`)
+  })
 }
 
 function getOutputString(ref) {
