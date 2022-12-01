@@ -9,13 +9,15 @@ async function run() {
   }
   const branch = github.context.payload.ref.split('/').pop()
   let after = github.context.payload.after
-  const jobId = "Verifiy branch"
+  const jobId = process.env["GITHUB_WORKFLOW"]
   const token = core.getInput("githubToken")
   console.log("job id", jobId)
   const octokit = github.getOctokit(token);
   const repository = process.env.GITHUB_REPOSITORY;
   const [owner, repo] = repository.split("/");
 
+  const workflows = await octokit.rest.actions.listRepoWorkflows({ owner, repo });
+  workflows.data.workflows.map(it => console.log(it))
   const response = await octokit.rest.actions.listWorkflowRuns({owner, repo, workflow_id: jobId, per_page: 100});
   let workflow = response.data.workflow_runs
     .filter(it => it.conclusion === "success" && branch === it.head_branch)
