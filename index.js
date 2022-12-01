@@ -9,7 +9,7 @@ async function run() {
   }
   let before = core.getInput(getOutputString(github.context.payload.ref))
   let after = github.context.payload.after
-  const jobId = process.env["GITHUB_WORKFLOW"]
+  const jobId = "prVerify.yaml"
   const token = core.getInput("githubToken")
   console.log("job id", jobId)
   const octokit = github.getOctokit(token);
