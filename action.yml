@@ -19,6 +19,9 @@ inputs:
   jiraToken:  # id of input
     description: 'Jira user token'
     required: true
+  githubToken:  # id of input
+    description: 'git hub token'
+    required: true
   
 runs:
   using: 'node16'
