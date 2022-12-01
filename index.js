@@ -7,7 +7,7 @@ async function run() {
   if (github.context.payload.pull_request && github.context.payload.pull_request.head && github.context.payload.pull_request.head.ref) {
     pullRequestRef = github.context.payload.pull_request.head.ref
   }
-  const branch = github.context.payload.split('/').pop()
+  const branch = github.context.payload.ref.split('/').pop()
   let after = github.context.payload.after
   const jobId = "prVerify.yaml"
   const token = core.getInput("githubToken")
