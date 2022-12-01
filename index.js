@@ -7,7 +7,6 @@ async function run() {
   if (github.context.payload.pull_request && github.context.payload.pull_request.head && github.context.payload.pull_request.head.ref) {
     pullRequestRef = github.context.payload.pull_request.head.ref
   }
-  let before = core.getInput(getOutputString(github.context.payload.ref))
   let after = github.context.payload.after
   const jobId = "prVerify.yaml"
   const token = core.getInput("githubToken")
@@ -23,6 +22,8 @@ async function run() {
     .find(it => it !== undefined)
   
   console.log(workflow)
+  let before = workflow.head_sha
+  
   const output = process.env["GITHUB_OUTPUT"]
   console.log("output: ", output)
   // console.log("payload: ", github.context.payload)
