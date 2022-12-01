@@ -9,7 +9,17 @@ async function run() {
   }
   let before = core.getInput(getOutputString(github.context.payload.ref))
   let after = github.context.payload.after
-  console.log("before: ", before, getOutputString(github.context.payload.ref))
+
+  const jobId = process.env["GITHUB_JOB"]
+  console.log("job id", jobId)
+  const repository = process.env.GITHUB_REPOSITORY;
+  const [owner, repo] = repository.split("/");
+
+  const response = await octokit.rest.actions.listWorkflowRuns({ owner, repo, workflow_id: jobId, per_page: 100 });
+  response.data.workflow_runs.map(it=> console.log(it))
+
+  const output = process.env["GITHUB_OUTPUT"]
+  console.log("output: ", output)
   // console.log("payload: ", github.context.payload)
   let commitTickets = await action.extractCommits(after, before)
   let ticketList = [...commitTickets, pullRequestRef, github.context.payload.ref]
@@ -30,6 +40,7 @@ async function run() {
   // ).then(transitioned => {
   //   console.log(`Tickets ${transitioned.join(", ")} transitioned to ${targetTransition}`)
   // })
+  output
   core.setOutput(getOutputString(github.context.payload.ref), after)
 }
 
