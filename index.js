@@ -17,7 +17,7 @@ async function run() {
 
   const workflows = await octokit.rest.actions.listRepoWorkflows({ owner, repo });
   console.log("workflows", workflows.data.workflows)
-  const jobId = workflows.data.workflows.find(it => it.name === workflowName).path.split['/'].pop()
+  const jobId = workflows.data.workflows.find(it => it.name === workflowName).path.split('/').pop()
   const response = await octokit.rest.actions.listWorkflowRuns({owner, repo, workflow_id: jobId, per_page: 100});
   let workflow = response.data.workflow_runs
     .filter(it => it.conclusion === "success" && branch === it.head_branch)
