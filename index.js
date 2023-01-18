@@ -7,6 +7,7 @@ async function run() {
   if (github.context.payload.pull_request && github.context.payload.pull_request.head && github.context.payload.pull_request.head.ref) {
     pullRequestRef = github.context.payload.pull_request.head.ref
   }
+  console.log(github.context.payload)
   const branch = github.context.payload.ref.split('/').pop()
   let after = github.context.payload.after
   const workflowName = process.env["GITHUB_WORKFLOW"]
