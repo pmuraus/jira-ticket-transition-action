@@ -16,3 +16,5 @@ jobs:
           jiraBaseUrl: "peromed.atlassian.net"
           jiraEmail: "peromed@gmail.com"
           jiraToken: ${{secrets.JIRA_TOKEN}}
+          fixVersion: "peterTestFixVersion"
+          jiraProject: "IW"
