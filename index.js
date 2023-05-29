@@ -50,16 +50,18 @@ async function run() {
 
   let fixVersion = core.getInput("fixVersion")
   let jiraProject = core.getInput("jiraProject")
-  if (fixVersion && jiraProject) {
 
+  if (fixVersion && jiraProject) {
+    action.addReleaseVersion(
+      core.getInput("jiraBaseUrl"),
+      core.getInput("jiraEmail"),
+      core.getInput("jiraToken"),
+      fixVersion,
+      jiraProject,
+      tickets
+    )
   }
-  action.addReleaseVersion(core.getInput("jiraBaseUrl"),
-    core.getInput("jiraEmail"),
-    core.getInput("jiraToken"),
-    fixVersion,
-    jiraProject,
-    tickets
-  )
+
 }
 
 run()
