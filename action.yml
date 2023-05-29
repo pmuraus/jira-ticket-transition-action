@@ -23,7 +23,7 @@ inputs:
     description: 'git hub token'
     required: true
   fixVersion:  
-    description: 'Assign version to tickets (creates version if it doesn't exist)'
+    description: 'Assign version to tickets (creates version if it doesnt exist)'
     required: false
   jiraProject:  
     description: 'Jira project (IW example)'
