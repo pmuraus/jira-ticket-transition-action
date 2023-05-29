@@ -49,6 +49,40 @@ async function extractCommits(after, before) {
   }
 }
 
+async function addReleaseVersion(baseUrl, email, token, version, project, tickets) {
+  var JiraApi = require('jira-client');
+  var jira = new JiraApi({
+    protocol: 'https',
+    host: baseUrl,
+    username: email,
+    password: token,
+    apiVersion: '2',
+    strictSSL: true
+  });
+  
+  try {
+    await jira.createVersion({
+      "name": version,
+      "project": project
+    })
+  } catch (err) {
+    console.log(err)
+  }
+
+  for (let ticket of tickets) {
+    let issue = await jira.findIssue(ticket)
+    jira.updateIssue(issue.id, {
+      "update": {
+      "fixVersions": [
+      {"add": 
+      {"name": version}
+      }
+      ]
+      }
+      })
+  }
+}
+
 async function transitionTickets(tickets, sourceTransition, targetTransition, message, baseUrl, email, token) {
   var JiraApi = require('jira-client');
   var jira = new JiraApi({
@@ -88,5 +122,6 @@ async function transitionTickets(tickets, sourceTransition, targetTransition, me
 module.exports = {
   getTickets,
   transitionTickets,
-  extractCommits
+  extractCommits,
+  addReleaseVersion
 }

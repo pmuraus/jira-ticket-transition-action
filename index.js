@@ -16,7 +16,7 @@ async function run() {
   const repository = process.env.GITHUB_REPOSITORY;
   const [owner, repo] = repository.split("/");
 
-  const workflows = await octokit.rest.actions.listRepoWorkflows({ owner, repo });
+  const workflows = await octokit.rest.actions.listRepoWorkflows({owner, repo});
   console.log("workflows", workflows.data.workflows)
   const jobId = workflows.data.workflows.find(it => it.name === workflowName).path.split('/').pop()
   const response = await octokit.rest.actions.listWorkflowRuns({owner, repo, workflow_id: jobId, per_page: 100});
@@ -24,9 +24,9 @@ async function run() {
     .filter(it => it.conclusion === "success" && branch === it.head_branch)
     .sort((r1, r2) => new Date(r2.created_at).getTime() - new Date(r1.created_at).getTime())
     .find(it => it !== undefined)
-  
+
   let before = workflow && workflow.head_sha
-  
+
   const output = process.env["GITHUB_OUTPUT"]
   let commitTickets = await action.extractCommits(after, before)
   let ticketList = [...commitTickets, pullRequestRef, github.context.payload.ref]
@@ -47,6 +47,21 @@ async function run() {
   ).then(transitioned => {
     console.log(`Tickets ${transitioned.join(", ")} transitioned to ${targetTransition}`)
   })
+
+  let fixVersion = core.getInput("fixVersion")
+  let jiraProject = core.getInput("jiraProject")
+
+  if (fixVersion && jiraProject) {
+    action.addReleaseVersion(
+      core.getInput("jiraBaseUrl"),
+      core.getInput("jiraEmail"),
+      core.getInput("jiraToken"),
+      fixVersion,
+      jiraProject,
+      tickets
+    )
+  }
+
 }
 
 run()

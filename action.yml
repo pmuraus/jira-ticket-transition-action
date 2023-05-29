@@ -22,6 +22,12 @@ inputs:
   githubToken:  # id of input
     description: 'git hub token'
     required: true
+  fixVersion:  
+    description: 'Assign version to tickets'
+    required: false
+  jiraProject:  
+    description: 'Jira project (IW example)'
+    required: false
   
 runs:
   using: 'node16'

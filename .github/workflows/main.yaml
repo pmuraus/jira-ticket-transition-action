@@ -9,10 +9,15 @@ jobs:
       - uses: actions/checkout@v2
       - name: install
         run: npm install
+
       - uses: pmuraus/jira-ticket-transition-action@main
         with:
-          targetTransition: "In Progress"
-          message: "$OWNER_NAME started working on this issue"
-          jiraBaseUrl: "peromed.atlassian.net"
-          jiraEmail: "peromed@gmail.com"
+          sourceTransition: "In Progress"
+          targetTransition: "In Review"
+          message: "$OWNER_NAME testing this action flow"
+          jiraBaseUrl: "impactwrap.atlassian.net"
+          jiraEmail: "hudson@inova.si"
           jiraToken: ${{secrets.JIRA_TOKEN}}
+          githubToken: ${{secrets.GITHUB_TOKEN}}
+          fixVersion: "peterTestFixVersion"
+          jiraProject: "IW"
