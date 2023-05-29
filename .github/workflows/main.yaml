@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: install
         run: npm install
-      - uses: pmuraus/jira-ticket-transition-action@auto_tag
+      - uses: pmuraus/jira-ticket-transition-action@d0b439cc59fc63710030d79d3b691b075ac9d1d3
         with:
           targetTransition: "In Progress"
           message: "$OWNER_NAME started working on this issue"
