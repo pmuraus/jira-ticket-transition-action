@@ -9,6 +9,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: install
         run: npm install
+        
       - uses: pmuraus/jira-ticket-transition-action@a6805b24d0d81a90dfb7b20272e751f3d61bfcb6
         with:
           sourceTransition: "In Progress"
