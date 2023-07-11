@@ -70,16 +70,29 @@ async function addReleaseVersion(baseUrl, email, token, version, project, ticket
   }
 
   for (let ticket of tickets) {
-    let issue = await jira.findIssue(ticket)
-    jira.updateIssue(issue.id, {
-      "update": {
-      "fixVersions": [
-      {"add": 
-      {"name": version}
-      }
-      ]
-      }
+    let issue = await findTicket(ticket)
+    if (issue) {
+      jira.updateIssue(issue.id, {
+        "update": {
+          "fixVersions": [
+            {
+              "add":
+                {"name": version}
+            }
+          ]
+        }
       })
+    }
+  }
+}
+
+async function findTicket(ticket) {
+  try {
+    let issue = await jira.findIssue(ticket)
+    return issue
+  } catch {
+    console.log(`Couldnt find ${ticket}`)
+    return null
   }
 }
 
@@ -97,18 +110,20 @@ async function transitionTickets(tickets, sourceTransition, targetTransition, me
   let transitioned = []
   for (let ticket of tickets) {
     try {
-      let issue = await jira.findIssue(ticket)
-      if (sourceTransition && sourceTransition.toLowerCase() !== issue.fields.status.name.toLowerCase()) {
-        console.log(`${ticket} is not in ${sourceTransition} status (${issue.fields.status.name}), skipping`)
-      } else {
-        let transitionId = await jira.listTransitions(ticket).then(res => {
-          return res.transitions.find((it) => it.name.toLowerCase() === targetTransition.toLowerCase()).id
-        })
-        if (issue.fields.status.name.toLowerCase() !== targetTransition.toLowerCase()) {
-          await jira.transitionIssue(ticket, {transition: transitionId})
-          transitioned.push(ticket)
-          if (message) {
-            await jira.addComment(ticket, message)
+      let issue = await findTicket(ticket)
+      if (issue) {
+        if (sourceTransition && sourceTransition.toLowerCase() !== issue.fields.status.name.toLowerCase()) {
+          console.log(`${ticket} is not in ${sourceTransition} status (${issue.fields.status.name}), skipping`)
+        } else {
+          let transitionId = await jira.listTransitions(ticket).then(res => {
+            return res.transitions.find((it) => it.name.toLowerCase() === targetTransition.toLowerCase()).id
+          })
+          if (issue.fields.status.name.toLowerCase() !== targetTransition.toLowerCase()) {
+            await jira.transitionIssue(ticket, {transition: transitionId})
+            transitioned.push(ticket)
+            if (message) {
+              await jira.addComment(ticket, message)
+            }
           }
         }
       }
