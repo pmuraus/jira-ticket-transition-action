@@ -70,7 +70,7 @@ async function addReleaseVersion(baseUrl, email, token, version, project, ticket
   }
 
   for (let ticket of tickets) {
-    let issue = await findTicket(ticket)
+    let issue = await findTicket(jira, ticket)
     if (issue) {
       jira.updateIssue(issue.id, {
         "update": {
@@ -86,7 +86,7 @@ async function addReleaseVersion(baseUrl, email, token, version, project, ticket
   }
 }
 
-async function findTicket(ticket) {
+async function findTicket(jira, ticket) {
   try {
     let issue = await jira.findIssue(ticket)
     return issue
@@ -110,7 +110,7 @@ async function transitionTickets(tickets, sourceTransition, targetTransition, me
   let transitioned = []
   for (let ticket of tickets) {
     try {
-      let issue = await findTicket(ticket)
+      let issue = await findTicket(jira, ticket)
       if (issue) {
         if (sourceTransition && sourceTransition.toLowerCase() !== issue.fields.status.name.toLowerCase()) {
           console.log(`${ticket} is not in ${sourceTransition} status (${issue.fields.status.name}), skipping`)
