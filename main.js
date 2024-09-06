@@ -134,9 +134,35 @@ async function transitionTickets(tickets, sourceTransition, targetTransition, me
   return transitioned
 }
 
+async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
+  var JiraApi = require('jira-client');
+  var jira = new JiraApi({
+    protocol: 'https',
+    host: baseUrl,
+    username: email,
+    password: token,
+    apiVersion: '2',
+    strictSSL: true
+  });
+
+  let transitioned = []
+  for (let ticket of tickets) {
+    try {
+      let issue = await findTicket(jira, ticket)
+      if (issue) {
+        await jira.updateAssignee(ticket, assigneeEmail)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+  return transitioned
+}
+
 module.exports = {
   getTickets,
   transitionTickets,
   extractCommits,
-  addReleaseVersion
+  addReleaseVersion,
+  updateAssignee
 }

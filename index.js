@@ -62,6 +62,18 @@ async function run() {
     )
   }
 
+  let assigneeEmail = core.getInput("assigneeEmail")
+
+  if (assigneeEmail) {
+    action.updateAssignee(
+      core.getInput("jiraBaseUrl"),
+      core.getInput("jiraEmail"),
+      core.getInput("jiraToken"),
+      assigneeEmail,
+      tickets,
+    )
+  }
+
 }
 
 run()

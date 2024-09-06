@@ -28,6 +28,9 @@ inputs:
   jiraProject:  
     description: 'Jira project (IW example)'
     required: false
+  assigneeEmail:
+    description: 'Email of the assignee'
+    required: false
   
 runs:
   using: 'node16'
