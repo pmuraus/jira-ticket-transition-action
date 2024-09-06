@@ -64,8 +64,8 @@ async function run() {
 
   let assigneeEmail = core.getInput("assigneeEmail")
 
+  console.log('update assignee', assigneeEmail);
   if (assigneeEmail) {
-    console.log('update assignee', assigneeEmail);
     action.updateAssignee(
       core.getInput("jiraBaseUrl"),
       core.getInput("jiraEmail"),
