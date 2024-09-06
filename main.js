@@ -150,7 +150,7 @@ async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
     let users = await jira.searchUsers({
       query: assigneeEmail
     });
-    userAccountId = users && users[0] && users[0].displayName;
+    userAccountId = users && users[0] && users[0].accountId;
   } catch (error) {
     console.log(error.message)
   }
