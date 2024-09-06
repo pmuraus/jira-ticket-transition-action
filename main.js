@@ -148,6 +148,8 @@ async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
   let transitioned = []
   for (let ticket of tickets) {
     try {
+      let users = await jira.getUsers();
+      console.log(users);
       let issue = await findTicket(jira, ticket)
       if (issue) {
         await jira.updateAssignee(ticket, assigneeEmail)
