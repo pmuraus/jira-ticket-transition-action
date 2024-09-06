@@ -145,30 +145,29 @@ async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
     strictSSL: true
   });
 
+  let userAccountId;
   try {
     let users = await jira.searchUsers({
       query: assigneeEmail
     });
     let userAccountId = users && users[0] && users[0].accountId;
-    if (userAccountId) {
-      console.log(userAccountId);
-    }
   } catch (error) {
-    console.log("Error on updateAssignee", error.message)
+    console.log(error.message)
   }
 
-  // for (let ticket of tickets) {
-  //   try {
-  //     let users = await jira.searchUsers(assigneeEmail);
-  //     console.log(users);
-  //     let issue = await findTicket(jira, ticket)
-  //     if (issue) {
-  //       await jira.updateAssignee(ticket, assigneeEmail)
-  //     }
-  //   } catch (error) {
-  //     console.log("Error on updateAssignee", error.message)
-  //   }
-  // }
+  if (userAccountId) {
+    console.log(userAccountId);
+    for (let ticket of tickets) {
+      try {
+        let issue = await findTicket(jira, ticket)
+        if (issue) {
+          await jira.updateAssignee(ticket, userAccountId)
+        }
+      } catch (error) {
+        console.log("Error on updateAssignee", error.message)
+      }
+    }
+  }
 }
 
 module.exports = {
