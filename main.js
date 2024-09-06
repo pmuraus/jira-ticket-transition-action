@@ -153,7 +153,7 @@ async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
         await jira.updateAssignee(ticket, assigneeEmail)
       }
     } catch (error) {
-      console.log(error.message)
+      console.log("Error on updateAssignee", error.message)
     }
   }
   return transitioned
