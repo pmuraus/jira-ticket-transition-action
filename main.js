@@ -145,23 +145,23 @@ async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
     strictSSL: true
   });
 
-  let userAccountId;
+  let displayName;
   try {
     let users = await jira.searchUsers({
       query: assigneeEmail
     });
-    userAccountId = users && users[0] && users[0].accountId;
+    displayName = users && users[0] && users[0].displayName;
   } catch (error) {
     console.log(error.message)
   }
 
-  if (userAccountId) {
+  if (displayName) {
     for (let ticket of tickets) {
       try {
         let issue = await findTicket(jira, ticket)
         if (issue) {
-          console.log("update assignee with email:", assigneeEmail, "and accId:", userAccountId, "on ticket", ticket);
-          await jira.updateAssignee(ticket, userAccountId)
+          console.log("update assignee with email:", assigneeEmail, "and accId:", displayName, "on ticket", ticket);
+          await jira.updateAssignee(ticket, displayName)
         }
       } catch (error) {
         console.log("Error on updateAssignee", error.message)
