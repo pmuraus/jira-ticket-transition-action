@@ -146,12 +146,12 @@ async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
   });
 
   try {
-    let userData = await jira.searchUsers({
+    let users = await jira.searchUsers({
       query: assigneeEmail
     });
-    console.log(userData);
-    if (userData && userData.accountId) {
-      console.log(userData.accountId);
+    let userAccountId = users && users[0] && users[0].accountId;
+    if (userAccountId) {
+      console.log(userAccountId);
     }
   } catch (error) {
     console.log("Error on updateAssignee", error.message)
