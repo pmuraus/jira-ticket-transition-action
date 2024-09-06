@@ -141,7 +141,7 @@ async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
     host: baseUrl,
     username: email,
     password: token,
-    apiVersion: '2',
+    apiVersion: '3',
     strictSSL: true
   });
 
