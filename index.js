@@ -35,6 +35,9 @@ async function run() {
   const sourceTransition = core.getInput("sourceTransition")
   console.log("commitTickets ", commitTickets.map(it => it && it.message))
   console.log("tickets: ", tickets, "before: ", before, "after: ", after)
+  let assigneeEmail = core.getInput("assigneeEmail")
+
+  console.log('update assignee', assigneeEmail);
 
   action.transitionTickets(
     tickets,
@@ -62,9 +65,6 @@ async function run() {
     )
   }
 
-  let assigneeEmail = core.getInput("assigneeEmail")
-
-  console.log('update assignee', assigneeEmail);
   if (assigneeEmail) {
     action.updateAssignee(
       core.getInput("jiraBaseUrl"),
