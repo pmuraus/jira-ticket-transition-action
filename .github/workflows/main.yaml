@@ -10,6 +10,10 @@ jobs:
       - name: install
         run: npm install
 
+      - name: Retrieve assignee email
+        run: |
+          echo "ASSIGNEE_EMAIL=$(git log --pretty="%aE" -n 1)" >> $GITHUB_ENV
+
       - uses: pmuraus/jira-ticket-transition-action@main
         with:
           sourceTransition: "In Progress"
@@ -21,3 +25,4 @@ jobs:
           githubToken: ${{secrets.GITHUB_TOKEN}}
           fixVersion: "peterTestFixVersion"
           jiraProject: "IW"
+          assigneeEmail: ${{ env.ASSIGNEE_EMAIL }}
