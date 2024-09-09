@@ -160,11 +160,10 @@ async function updateAssignee(baseUrl, email, token, assigneeEmail, tickets) {
       try {
         let issue = await findTicket(jira, ticket)
         if (issue) {
-          console.log("update assignee with email:", assigneeEmail, "and accId:", userAccountId, "on ticket", ticket);
-          await jira.updateAssigneeWithId(ticket, userAccountId)
+         await jira.updateAssigneeWithId(ticket, userAccountId)
         }
       } catch (error) {
-        console.log("Error on updateAssignee", error.message)
+        console.log(error.message)
       }
     }
   }
