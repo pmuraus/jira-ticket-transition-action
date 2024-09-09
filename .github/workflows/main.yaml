@@ -10,6 +10,10 @@ jobs:
       - name: install
         run: npm install
 
+      - name: Retrieve assignee email
+        run: |
+          echo "ASSIGNEE_EMAIL=$(git log --pretty="%aE" -n 1)" >> $GITHUB_ENV
+
       - uses: pmuraus/jira-ticket-transition-action@main
         with:
           sourceTransition: "In Progress"
@@ -21,20 +25,4 @@ jobs:
           githubToken: ${{secrets.GITHUB_TOKEN}}
           fixVersion: "peterTestFixVersion"
           jiraProject: "IW"
-
-  assignUser:
-    if: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev'}}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Retrieve assignee email
-        run: |
-          echo "ASSIGNEE_EMAIL=$(git log --pretty="%aE" -n 1)" >> $GITHUB_ENV
-      - uses: PetarKuzmanov/jira-ticket-transition-action@main
-        with:
-          sourceTransition: "In Progress"
-          jiraBaseUrl: "inova-it.atlassian.net"
-          jiraEmail: "hudson@inova.si"
-          jiraToken: ${{secrets.JIRA_TOKEN}}
-          githubToken: ${{secrets.GITHUB_TOKEN}}
           assigneeEmail: ${{ env.ASSIGNEE_EMAIL }}
